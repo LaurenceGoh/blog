@@ -33,9 +33,17 @@ const Page = () => {
     console.log(data);
 
     toast.promise(loginWithPwd(data), {
-      loading: "Logging in...",
-      success: <b>Successfully logged in </b>,
-      error: (err) => err.toString(),
+      loading: () => {
+        setLoading(true);
+        return "Logging in..."
+      },
+      success: () => {
+        setLoading(false);
+        return "Successfully logged in."
+      },
+      error: (err) => {
+        setLoading(false);
+        return err.toString()},
     });
   };
 
@@ -64,8 +72,8 @@ const Page = () => {
             <p className="text-red-500">{errors.password.message}</p>
           )}
 
-          <Button type="submit" className="w-full" variant="bordered">
-            Log in
+          <Button type="submit" className="w-full" variant="bordered" isLoading={loading}>
+            {loading ? "Loading..." : "Log in"}
           </Button>
         </form>
       </Card>

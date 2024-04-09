@@ -30,13 +30,21 @@ const Page = () => {
     }
   }) 
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (data) => {
-    console.log(data)
-    const signUpData = await signUp(data);
-    console.log(signUpData)
-    if (signUpData) {
-      toast.success("Please check your email to verify your email address.")
-    }
+    toast.promise(signUp(data), {
+      loading: () => {
+        setLoading(true);
+        return "Signing up..."
+      },
+      success: () => {
+        setLoading(false);
+        return "Please check your email to verify your email address."
+      },
+      error: (err) => {
+        setLoading(false);
+        return err.toString()},
+    });
   };
+ 
 
 
   return (
