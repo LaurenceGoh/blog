@@ -48,7 +48,7 @@ const Page = () => {
 
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-[75vh]">
       <Card className="p-12 m-auto space-y-5 min-w-[400px]">
         <CardBody className="text-center text-2xl">Sign up here</CardBody>
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>

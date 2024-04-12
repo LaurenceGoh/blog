@@ -18,13 +18,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark h-screen">
       <body className={inter.className}>
         <Providers>
-          <AppBar />
           <Toaster position="bottom-right" />
 
-          {children}
+          <main className="flex h-screen flex-col">
+            <AppBar />
+            {children}
+          </main>
         </Providers>
       </body>
     </html>

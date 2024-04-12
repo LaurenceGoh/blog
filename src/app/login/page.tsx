@@ -7,8 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { loginWithPwd } from "@/services/auth";
 import { toast } from "react-hot-toast";
-
+import { useRouter } from "next/navigation";
 const Page = () => {
+  const router = useRouter();
+
   const [loading, setLoading] = useState<boolean>(false);
 
   const formSchema = z.object({
@@ -30,25 +32,25 @@ const Page = () => {
     },
   });
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = async (data) => {
-    console.log(data);
-
     toast.promise(loginWithPwd(data), {
       loading: () => {
         setLoading(true);
-        return "Logging in..."
+        return "Logging in...";
       },
       success: () => {
         setLoading(false);
-        return "Successfully logged in."
+        router.push("/");
+        return "Logged in";
       },
       error: (err) => {
         setLoading(false);
-        return err.toString()},
+        return err.toString();
+      },
     });
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-[75vh]">
       <Card className="p-12 m-auto space-y-5 min-w-[400px]">
         <CardBody className="text-center text-2xl">Log in here</CardBody>
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
@@ -72,7 +74,12 @@ const Page = () => {
             <p className="text-red-500">{errors.password.message}</p>
           )}
 
-          <Button type="submit" className="w-full" variant="bordered" isLoading={loading}>
+          <Button
+            type="submit"
+            className="w-full"
+            variant="bordered"
+            isLoading={loading}
+          >
             {loading ? "Loading..." : "Log in"}
           </Button>
         </form>

@@ -3,18 +3,17 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
   Link,
   Button,
 } from "@nextui-org/react";
-
+import { redirect } from "next/navigation";
 import React from "react";
-
-const AppBar = () => {
+import { getUserSession, logoutUser } from "@/services/auth";
+import LoginButtons from "./LoginButtons";
+const AppBar = async () => {
+  const { data } = await getUserSession(); 
   return (
-    <Navbar position="static" isBordered>
+    <Navbar position="static" isBordered className="h-20">
       <NavbarBrand>
         <p className="font-bold text-inherit">Blogify</p>
       </NavbarBrand>
@@ -25,7 +24,7 @@ const AppBar = () => {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link  color="foreground" href="/blogs">
+          <Link color="foreground" href="/blogs">
             Blogs
           </Link>
         </NavbarItem>
@@ -36,14 +35,10 @@ const AppBar = () => {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="/login">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="/signup" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
+        
+        <LoginButtons data={data}/>
+
+
       </NavbarContent>
     </Navbar>
   );

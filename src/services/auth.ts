@@ -46,7 +46,7 @@ export const forgotPassword = async (email: string) => {
   return data;
 };
 
-export const logout = async () => {
+export const logoutUser = async () => {
   const supabase = createClient();
 
   let { error } = await supabase.auth.signOut();
@@ -54,5 +54,11 @@ export const logout = async () => {
     return error.message;
   }
 
-  return;
+  return 'Successfully logged out';
 };
+
+
+export const getUserSession = async () => {
+  const supabase = createClient();
+  return supabase.auth.getUser();
+}
