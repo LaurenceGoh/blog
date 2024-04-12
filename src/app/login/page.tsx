@@ -39,7 +39,7 @@ const Page = () => {
       },
       success: () => {
         setLoading(false);
-        router.push("/");
+        router.push("/blogs");
         return "Logged in";
       },
       error: (err) => {
