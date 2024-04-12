@@ -19,6 +19,8 @@ export const addBlog = async (blogData : Blogs) => {
 
 export const readAllBlogs = async () => {
   const supabase = createClient();
+
+  console.log("Fetching blogs...")
   const {data,error} = await supabase.from('blogs').select(`
     id,title, body, tags, reactions, author(username)
   `)
